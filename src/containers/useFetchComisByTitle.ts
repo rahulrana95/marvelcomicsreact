@@ -96,25 +96,32 @@ export interface Date {
 }
 
 const useFetchComicsByTitle = () => {
-  const queryClient = useQueryClient();
-
-  const [title, setTitle] = useState("");
   const [pageNum, setPageNum] = useState(0);
+  const [titleQuery, setTitleQuery] = useState("");
+  const [selectedCharacters, setSelectedCharacter] = useState({});
 
-  const getChars = async (title: string, pageNum: number) => {
+  const getChars = async (
+    title: string,
+    pageNum: number,
+    selectedCharIds: string[] = []
+  ) => {
     try {
       let queryParams: {
         titleStartsWith: string;
         offset: number;
         apikey: string;
+        characters?: string[];
       } = {
-        titleStartsWith: "",
+        titleStartsWith: title,
         offset: pageNum * 20,
         apikey: config.MARVEL_PUBLIC_KEY || "",
       };
 
       if (title) {
         queryParams.titleStartsWith = title;
+      }
+      if (selectedCharIds.length) {
+        queryParams.characters = selectedCharIds;
       }
 
       const searchParams = new URLSearchParams();
@@ -144,12 +151,15 @@ const useFetchComicsByTitle = () => {
     }
   };
 
+  const ids = Object.entries(selectedCharacters)
+    .filter(([, val]) => !!val)
+    .map(([id, val]) => id);
+
   const query = useQuery({
-    queryKey: ["fetchChar", title, pageNum],
-    queryFn: () => getChars(title, pageNum),
+    queryKey: ["fetchChar", titleQuery, pageNum, ids],
+    queryFn: () => getChars(titleQuery, pageNum, ids),
   });
 
-  console.log(query?.data?.result?.data); // results
   const resp = {
     result: query?.data?.result?.data?.results || [],
     total: query?.data?.result?.data?.total || 0,
@@ -157,12 +167,16 @@ const useFetchComicsByTitle = () => {
     limit: query?.data?.result?.data?.limit || 0,
     count: query?.data?.result?.data?.count || 0,
     totalPages: 0,
-    setTitle,
     setPageNum,
+    isLoading: query.isLoading,
     pageNum,
+    titleQuery,
+    setTitleQuery,
+    selectedCharacters,
+    setSelectedCharacter,
   };
 
-  resp.totalPages = resp.total > 0 ? resp.total / resp.limit : 0;
+  resp.totalPages = Math.ceil(resp.total > 0 ? resp.total / resp.limit : 0);
 
   return resp;
 };

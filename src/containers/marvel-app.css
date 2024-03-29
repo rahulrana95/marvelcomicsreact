@@ -1,4 +1,18 @@
 .marvelapp {
-    max-width: 700px;
+    max-width: 900px;
     margin: auto;
+}
+
+.comics-area__spinner {
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comics-area__no-msg {
+     min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
