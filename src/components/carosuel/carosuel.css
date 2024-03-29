@@ -3,6 +3,7 @@
     height: 100px;
     border-radius: 100px;
     margin: 0px 20px;
+    border: 3px solid grey;
 }
 
 .character__wrapper {
@@ -37,6 +38,7 @@
 .clear-all-filters-btn {
     margin-left: 20px;
     width: 130px;
+    height: fit-content;
 }
 
 .comics-filter {

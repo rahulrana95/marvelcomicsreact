@@ -1,7 +1,7 @@
 import React from "react";
-import { Comic } from "../containers/useFetchComisByTitle";
+import { Comic } from "../../containers/useFetchComisByTitle";
 import "./comics.css";
-import ImageWithPlaceholder from "./image-with-placeholdet";
+import ImageWithPlaceholder from "../image-placeholder/image-with-placeholdet";
 
 type PropsT = {
   comics: Comic[];
@@ -24,22 +24,17 @@ const Comics = ({
     const maxButtons = 10;
 
     // Calculate the start and end page numbers for rendering
-    let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+    let startPage = Math.max(0, currentPage - Math.floor(maxButtons / 2));
     let endPage = Math.min(totalPages, startPage + maxButtons - 1);
 
-    // Adjust startPage and endPage if there are fewer than maxButtons
-    if (endPage - startPage + 1 < maxButtons) {
-      startPage = Math.max(1, endPage - maxButtons + 1);
-    }
-
     // Add buttons to the array
-    for (let i = startPage; i <= endPage; i++) {
+    for (let i = startPage; i < endPage; i++) {
       buttons.push(
         <button
-          className={`${i - 1 === currentPage ? "current-page-active" : ""}`}
-          onClick={() => onClickPage(i - 1)}
+          className={`${i === currentPage ? "current-page-active" : ""}`}
+          onClick={() => onClickPage(i)}
         >
-          {i}
+          {i + 1}
         </button>
       );
     }
@@ -75,7 +70,7 @@ const Comics = ({
             isNaN(currentPage) ? 0 : currentPage
           )}
         </div>
-        <button disabled={currentPage >= totalPages} onClick={onClickNext}>
+        <button disabled={currentPage + 1 >= totalPages} onClick={onClickNext}>
           {">"}
         </button>
       </div>

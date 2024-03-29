@@ -67,6 +67,32 @@ button:hover:disabled {
   cursor: not-allowed;
 }
 
+.explore-text {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.char-filter-name {
+    color: rgb(16, 8, 139);
+    padding: 11px;
+    border: 1px solid blue;
+    border-radius: 20px;
+    margin-left: 8px;
+    margin-top: 8px
+}
+
+.comics-filter__filter-names {
+    flex-wrap: wrap;
+}
+
+.char-filter-name__cross {
+    margin-left: 8px;
+}
+
+.char-filter-name__cross:hover {
+    cursor: pointer;
+}
 
 
 .comics__comic-list {

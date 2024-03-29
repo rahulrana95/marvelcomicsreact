@@ -173,10 +173,14 @@ const useFetchComicsByTitle = () => {
     titleQuery,
     setTitleQuery,
     selectedCharacters,
-    setSelectedCharacter,
+    setSelectedCharacter: (valORCb: any) => {
+      setSelectedCharacter(valORCb);
+      setPageNum(0);
+    },
   };
 
-  resp.totalPages = Math.ceil(resp.total > 0 ? resp.total / resp.limit : 0);
+  resp.totalPages =
+    Math.floor(resp.total > 0 ? resp.total / resp.limit : 0) + 1;
 
   return resp;
 };

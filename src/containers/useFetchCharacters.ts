@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import config from "../constants";
 
 export interface Thumbnail {
@@ -68,10 +68,15 @@ export interface Character {
 }
 
 const useFetchCharacters = () => {
-  const getChars = async () => {
+  const [page, setPage] = useState(0);
+  const [chars, setCharData] = useState<Character[]>([]);
+
+  const getChars = async (page: number) => {
     try {
       const response = await fetch(
-        `${config.MARVEL_BASE_URL}/v1/public/characters?apikey=${config.MARVEL_PUBLIC_KEY}`
+        `${config.MARVEL_BASE_URL}/v1/public/characters?offset=${
+          page * 40
+        }&apikey=${config.MARVEL_PUBLIC_KEY}`
       );
       const result = await response.json();
       return {
@@ -86,9 +91,12 @@ const useFetchCharacters = () => {
     }
   };
 
-  const query = useQuery({ queryKey: ["fetchChar"], queryFn: getChars });
-  const data = query.data?.result?.data?.results || [];
-  const idToCharMap: { [id: string]: Character } = data.reduce(
+  const query = useQuery({
+    queryKey: ["fetchChar", page],
+    queryFn: () => getChars(page),
+  });
+
+  const idToCharMap: { [id: string]: Character } = chars.reduce(
     (acc: { [id: string]: Character }, curr: Character) => {
       acc[curr.id] = curr;
       return acc;
@@ -96,10 +104,19 @@ const useFetchCharacters = () => {
     {}
   );
 
+  useEffect(() => {
+    const data = query.data?.result?.data || { results: [] }; // Fallback value for data
+    if (data.results.length > 0) {
+      setCharData((chars: Character[]) => [...chars, ...data.results]);
+    }
+  }, [query.data?.result?.data]);
+
   return {
     result: query.data?.result?.data,
     errorMessage: query.data?.errorMessage,
     idToCharMap,
+    setPage,
+    chars,
   };
 };
 

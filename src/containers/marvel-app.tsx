@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo, useState } from "react";
 import useFetchCharacters from "./useFetchCharacters";
 import config from "../constants";
-import Carosuel from "../components/carosuel";
+import Carosuel from "../components/carosuel/carosuel";
 import "./marvel-app.css";
-import ComicsFilter from "../components/comics-filter";
+import ComicsFilter from "../components/comics/comics-filter";
 import useFetchComicsByTitle from "./useFetchComisByTitle";
-import Comics from "../components/comics";
+import Comics from "../components/comics/comics";
 import Header from "../components/header/header";
-import Spinner from "../components/spinner";
+import Spinner from "../components/spinner/spinner";
 
 const debounce = (func: Function, delay: number) => {
   let timeoutId: ReturnType<typeof setTimeout>;
@@ -30,7 +30,7 @@ const MarvelApp = () => {
   );
 
   const onCharacterSelect = (id: string, newState: boolean) => {
-    setSelectedCharacter((selectedCharacters) => ({
+    setSelectedCharacter((selectedCharacters: any) => ({
       ...selectedCharacters,
       [id]: newState,
     }));
@@ -65,6 +65,17 @@ const MarvelApp = () => {
   }, [selectedCharacters, characters]);
 
   console.log(fetchByTitle);
+
+  const fetchNext = () => {
+    characters.setPage((page) => page + 1);
+  };
+
+  const onCloseClick = (id: string | number) => {
+    setSelectedCharacter((selectedCharacters: any) => ({
+      ...selectedCharacters,
+      [id]: false,
+    }));
+  };
   return (
     <div className="marvelapp">
       <Header
@@ -72,12 +83,17 @@ const MarvelApp = () => {
         onTitleQueryChange={onTitleQueryChange}
       />
       <Carosuel
-        characters={characters?.result?.results || []}
+        characters={characters?.chars || []}
         selectedCharacters={selectedCharacters}
         onCharacterSelect={onCharacterSelect}
+        fetchNext={fetchNext}
       />
       <div className="comics-area">
-        <ComicsFilter names={filteredChars} onClickFilters={onClickFilters} />
+        <ComicsFilter
+          names={filteredChars}
+          onClickFilters={onClickFilters}
+          onCloseClick={onCloseClick}
+        />
         {fetchByTitle.isLoading && (
           <div className="comics-area__spinner">
             <Spinner />
@@ -88,7 +104,7 @@ const MarvelApp = () => {
             <Comics
               comics={fetchByTitle.result}
               totalPages={fetchByTitle.totalPages}
-              currentPage={fetchByTitle.offset / fetchByTitle.count}
+              currentPage={fetchByTitle.pageNum}
               onClickNext={onClickNext}
               onClickPrev={onClickPrev}
               onClickPage={onClickPage}
