@@ -1,0 +1,32 @@
+.image-placeholder-custom {
+    width: 100%;
+    height: 318px;
+}
+
+.image-container {
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    overflow: hidden;
+}
+
+.image-placeholder-custom {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-animation {
+  position: relative;
+animation: bounce-in 0.5s infinite alternate; /* Animation for bouncing */}
+
+@keyframes bounce-in {
+  from {
+    transform: translateX(-10px); /* Move 10px to the left */
+  }
+  to {
+    transform: translateX(10px); /* Move 10px to the right */
+  }
+}
+

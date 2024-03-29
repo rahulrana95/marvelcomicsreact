@@ -1,0 +1,52 @@
+.character__img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    margin: 0px 20px;
+}
+
+.character__wrapper {
+    display: flex;
+    overflow: scroll;
+    background-color: #757171;
+    padding: 20px;
+}
+
+.character__top:hover {
+    cursor: pointer;
+}
+
+.character__top {
+    position: relative;
+}
+
+
+.character__img-selected {
+    border: 3px solid blue;
+}
+
+.tick-image {
+    top: 25px;
+    right: 40px;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+
+.clear-all-filters-btn {
+    margin-left: 20px;
+    width: 130px;
+}
+
+.comics-filter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.comics-filter__filter-names {
+    width: 100%;
+    display: flex;
+    flex: wrap;
+}
