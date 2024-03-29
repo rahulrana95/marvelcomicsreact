@@ -47,7 +47,7 @@
 
 .comics__comic-title {
     white-space: nowrap;
-    width: 114px;
+    width: 160px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
