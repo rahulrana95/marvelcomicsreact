@@ -44,30 +44,32 @@ const Carosuel = ({
     }
   };
   return (
-    <div
-      className="character__wrapper"
-      ref={elementRef}
-      onScroll={handleScroll}
-    >
-      {characters.map((character) => {
-        const isCharacterSelected = selectedCharacters[character.id];
-        return (
-          <div
-            className="character__top"
-            onClick={() =>
-              onCharacterSelect(String(character.id), !isCharacterSelected)
-            }
-          >
-            <img
-              src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-              className={`character__img ${
-                isCharacterSelected ? "character__img-selected" : ""
-              } `}
-            />
-            {isCharacterSelected && <CheckSvg className="tick-image" />}
-          </div>
-        );
-      })}
+    <div className="caarousel-wrapper">
+      <div
+        className="character__wrapper"
+        ref={elementRef}
+        onScroll={handleScroll}
+      >
+        {characters.map((character) => {
+          const isCharacterSelected = selectedCharacters[character.id];
+          return (
+            <div
+              className="character__top"
+              onClick={() =>
+                onCharacterSelect(String(character.id), !isCharacterSelected)
+              }
+            >
+              <img
+                src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+                className={`character__img ${
+                  isCharacterSelected ? "character__img-selected" : ""
+                } `}
+              />
+              {isCharacterSelected && <CheckSvg className="tick-image" />}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

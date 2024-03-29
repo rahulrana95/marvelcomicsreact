@@ -88,34 +88,36 @@ const MarvelApp = () => {
         onCharacterSelect={onCharacterSelect}
         fetchNext={fetchNext}
       />
-      <div className="comics-area">
-        <ComicsFilter
-          names={filteredChars}
-          onClickFilters={onClickFilters}
-          onCloseClick={onCloseClick}
-        />
-        {fetchByTitle.isLoading && (
-          <div className="comics-area__spinner">
-            <Spinner />
-          </div>
-        )}
-        {!fetchByTitle.isLoading && fetchByTitle.count > 0 && (
-          <>
-            <Comics
-              comics={fetchByTitle.result}
-              totalPages={fetchByTitle.totalPages}
-              currentPage={fetchByTitle.pageNum}
-              onClickNext={onClickNext}
-              onClickPrev={onClickPrev}
-              onClickPage={onClickPage}
-            />
-          </>
-        )}
-        {!fetchByTitle.isLoading && fetchByTitle.count === 0 && (
-          <div className="comics-area__no-msg">
-            There are no comics for current search and filters.
-          </div>
-        )}
+      <div className="comics-area-wrapper">
+        <div className="comics-area">
+          <ComicsFilter
+            names={filteredChars}
+            onClickFilters={onClickFilters}
+            onCloseClick={onCloseClick}
+          />
+          {fetchByTitle.isLoading && (
+            <div className="comics-area__spinner">
+              <Spinner />
+            </div>
+          )}
+          {!fetchByTitle.isLoading && fetchByTitle.count > 0 && (
+            <>
+              <Comics
+                comics={fetchByTitle.result}
+                totalPages={fetchByTitle.totalPages}
+                currentPage={fetchByTitle.pageNum}
+                onClickNext={onClickNext}
+                onClickPrev={onClickPrev}
+                onClickPage={onClickPage}
+              />
+            </>
+          )}
+          {!fetchByTitle.isLoading && fetchByTitle.count === 0 && (
+            <div className="comics-area__no-msg">
+              There are no comics for current search and filters.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
