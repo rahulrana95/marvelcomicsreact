@@ -1,5 +1,5 @@
 import React from "react";
-import { Comic } from "../../containers/useFetchComisByTitle";
+import { Comic } from "../../containers/useMarvelApp";
 import "./comics.css";
 import ImageWithPlaceholder from "../image-placeholder/image-with-placeholdet";
 

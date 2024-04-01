@@ -4,7 +4,7 @@ import config from "../constants";
 import Carosuel from "../components/carosuel/carosuel";
 import "./marvel-app.css";
 import ComicsFilter from "../components/comics/comics-filter";
-import useMarvelApp from "./useFetchComisByTitle";
+import useMarvelApp from "./useMarvelApp";
 import Comics from "../components/comics/comics";
 import Header from "../components/header/header";
 import Spinner from "../components/spinner/spinner";
