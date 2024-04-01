@@ -2,11 +2,10 @@ import React, { ChangeEvent, useState } from "react";
 import "./header.css";
 
 type PropsT = {
-  titleQuery: string;
   onTitleQueryChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Header = ({ titleQuery, onTitleQueryChange }: PropsT) => {
+const Header = ({ onTitleQueryChange }: PropsT) => {
   const [val, setValue] = useState("");
 
   return (

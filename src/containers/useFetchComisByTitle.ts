@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import config from "../constants";
 import { useState } from "react";
 
@@ -95,7 +95,7 @@ export interface Date {
   date: string;
 }
 
-const useFetchComicsByTitle = () => {
+const useMarvelApp = () => {
   const [pageNum, setPageNum] = useState(0);
   const [titleQuery, setTitleQuery] = useState("");
   const [selectedCharacters, setSelectedCharacter] = useState({});
@@ -185,4 +185,4 @@ const useFetchComicsByTitle = () => {
   return resp;
 };
 
-export default useFetchComicsByTitle;
+export default useMarvelApp;

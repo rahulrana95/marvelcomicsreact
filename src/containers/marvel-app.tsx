@@ -4,7 +4,7 @@ import config from "../constants";
 import Carosuel from "../components/carosuel/carosuel";
 import "./marvel-app.css";
 import ComicsFilter from "../components/comics/comics-filter";
-import useFetchComicsByTitle from "./useFetchComisByTitle";
+import useMarvelApp from "./useFetchComisByTitle";
 import Comics from "../components/comics/comics";
 import Header from "../components/header/header";
 import Spinner from "../components/spinner/spinner";
@@ -21,11 +21,11 @@ const debounce = (func: Function, delay: number) => {
 
 const MarvelApp = () => {
   const characters = useFetchCharacters();
-  const fetchByTitle = useFetchComicsByTitle();
-  const { setSelectedCharacter, selectedCharacters } = fetchByTitle;
+  const marvelApp = useMarvelApp();
+  const { setSelectedCharacter, selectedCharacters } = marvelApp;
 
   const debouncedGetCharsCallback = useCallback(
-    debounce(fetchByTitle.setTitleQuery, 400),
+    debounce(marvelApp.setTitleQuery, 400),
     []
   );
 
@@ -41,16 +41,16 @@ const MarvelApp = () => {
   };
 
   const onClickNext = () => {
-    if (fetchByTitle.pageNum >= fetchByTitle.totalPages) return;
-    fetchByTitle.setPageNum((pageNum) => pageNum + 1);
+    if (marvelApp.pageNum >= marvelApp.totalPages) return;
+    marvelApp.setPageNum((pageNum) => pageNum + 1);
   };
   const onClickPrev = () => {
-    if (fetchByTitle.pageNum <= 0) return;
-    fetchByTitle.setPageNum((pageNum) => pageNum - 1);
+    if (marvelApp.pageNum <= 0) return;
+    marvelApp.setPageNum((pageNum) => pageNum - 1);
   };
 
   const onClickPage = (page: number) => {
-    fetchByTitle.setPageNum((pageNum) => page);
+    marvelApp.setPageNum((pageNum) => page);
   };
 
   const onTitleQueryChange = (e: any) => {
@@ -64,7 +64,7 @@ const MarvelApp = () => {
       .map(([id, val]) => characters.idToCharMap[String(id)]);
   }, [selectedCharacters, characters]);
 
-  console.log(fetchByTitle);
+  console.log(marvelApp);
 
   const fetchNext = () => {
     characters.setPage((page) => page + 1);
@@ -78,10 +78,7 @@ const MarvelApp = () => {
   };
   return (
     <div className="marvelapp">
-      <Header
-        titleQuery={fetchByTitle.titleQuery}
-        onTitleQueryChange={onTitleQueryChange}
-      />
+      <Header onTitleQueryChange={onTitleQueryChange} />
       <Carosuel
         characters={characters?.chars || []}
         selectedCharacters={selectedCharacters}
@@ -95,24 +92,24 @@ const MarvelApp = () => {
             onClickFilters={onClickFilters}
             onCloseClick={onCloseClick}
           />
-          {fetchByTitle.isLoading && (
+          {marvelApp.isLoading && (
             <div className="comics-area__spinner">
               <Spinner />
             </div>
           )}
-          {!fetchByTitle.isLoading && fetchByTitle.count > 0 && (
+          {!marvelApp.isLoading && marvelApp.count > 0 && (
             <>
               <Comics
-                comics={fetchByTitle.result}
-                totalPages={fetchByTitle.totalPages}
-                currentPage={fetchByTitle.pageNum}
+                comics={marvelApp.result}
+                totalPages={marvelApp.totalPages}
+                currentPage={marvelApp.pageNum}
                 onClickNext={onClickNext}
                 onClickPrev={onClickPrev}
                 onClickPage={onClickPage}
               />
             </>
           )}
-          {!fetchByTitle.isLoading && fetchByTitle.count === 0 && (
+          {!marvelApp.isLoading && marvelApp.count === 0 && (
             <div className="comics-area__no-msg">
               There are no comics for current search and filters.
             </div>

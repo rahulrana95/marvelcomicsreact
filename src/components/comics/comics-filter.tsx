@@ -19,8 +19,10 @@ const ComicsFilter = ({
         {characters.map((character, index) => {
           return (
             <div className="char-filter-name">
-              {character.name}
-              {index < characters.length - 1 ? ", " : ""}
+              <span>
+                {character.name}
+                {index < characters.length - 1 ? ", " : ""}
+              </span>
               <span
                 className="char-filter-name__cross"
                 onClick={() => onCloseClick(character.id)}

@@ -47,6 +47,7 @@ const Carosuel = ({
     <div className="caarousel-wrapper">
       <div
         className="character__wrapper"
+        data-testid="character-wrapper"
         ref={elementRef}
         onScroll={handleScroll}
       >
@@ -58,12 +59,14 @@ const Carosuel = ({
               onClick={() =>
                 onCharacterSelect(String(character.id), !isCharacterSelected)
               }
+              data-testid={`character-${character.id}`}
             >
               <img
                 src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
                 className={`character__img ${
                   isCharacterSelected ? "character__img-selected" : ""
                 } `}
+                alt={`Character ${character.id}`}
               />
               {isCharacterSelected && <CheckSvg className="tick-image" />}
             </div>
