@@ -10,3 +10,6 @@ Go to https://marvelcomicsreact-1.onrender.com/
 You can test here
 .
 After some testing, switch off internet for offline testing.
+
+### AMA
+For any questions mail the author: 3rahul4@gmail.com
